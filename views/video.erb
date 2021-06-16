@@ -1,12 +1,8 @@
 <div id="container">
-
-  <div id="login">
-    <input type="text" name="participant[username]" id="username" placeholder="Enter your name">
-  </div>
-  <div>
-    <button id="joinOrLeaveRoom">Join Video Call</button>
-  </div>
-
+  <form id="login">
+      <input type="text" id="username" placeholder="Enter your name" required>
+      <button type="submit" id="joinOrLeaveRoom">Join Video Call</button>
+  </form>
   <div id="participantsContainer">
     <div id="localParticipant">
       <div id="localVideoTrack" class="participant"></div>
@@ -15,8 +11,7 @@
       <%# Remote participants will be added here as they join the call %>
     </div>
   </div>
-
 </div>
 
-<script src="//media.twiliocdn.com/sdk/js/video/releases/2.8.0/twilio-video.min.js"></script>
+<script src="https://sdk.twilio.com/js/video/releases/2.14.0/twilio-video.min.js"></script>
 <script src="/app.js"></script>

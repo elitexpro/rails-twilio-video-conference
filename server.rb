@@ -1,12 +1,11 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/json'
+require 'rack/contrib'
 require 'twilio-ruby'
 
-# Set your server to puma
-configure { set :server, :puma }
-
 class VideoApp < Sinatra::Base
+  use Rack::JSONBodyParser
 
   # Reload the server when you change code in this file
   configure :development do
@@ -18,15 +17,11 @@ class VideoApp < Sinatra::Base
   end
 
   post '/token' do
-    request_body = JSON.parse(request.body.read)
+    # Get the username from the request
+    @username = params['username']
 
     # Handle error if no username was passed into the request
-    if request_body['username'].nil?
-      halt 400, 'No username in request'
-    end
-
-    # Get the username from the request
-    @username = request_body['username']
+    json status: 400, error: 'No username in request' if @username.nil?
 
     twilio_account_sid = ENV['TWILIO_ACCOUNT_SID']
     twilio_api_key_sid = ENV['TWILIO_API_KEY_SID']

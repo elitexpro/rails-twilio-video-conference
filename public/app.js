@@ -10,23 +10,19 @@ let room;
 
 async function addLocalVideo() {
   const videoTrack = await Twilio.Video.createLocalVideoTrack();
-  let trackElement = videoTrack.attach();
+  const trackElement = videoTrack.attach();
   localVideoTrack.appendChild(trackElement);
 };
 
 async function connectOrDisconnect(event) {
   event.preventDefault();
   if (!connected) {
-    let username = usernameInput.value;
-    if (!username) {
-      alert('Please enter your name before connecting to the video room');
-      return;
-    }
+    const username = usernameInput.value;
     joinLeaveButton.disabled = true;
     joinLeaveButton.innerHTML = 'Connecting...';
 
     try {
-      connect(username);
+      await connect(username);
     } catch (error) {
       console.log(error);
       alert('Failed to connect to video room.');
@@ -49,9 +45,9 @@ async function connect(username) {
   });
 
   const data = await response.json();
-  room = await Twilio.Video.connect(data.token, {room: 'my-video-room'});
+  room = await Twilio.Video.connect(data.token);
 
-  let identityDiv = document.createElement('div');
+  const identityDiv = document.createElement('div');
   identityDiv.setAttribute('class', 'identity');
   identityDiv.innerHTML = username;
   localParticipant.appendChild(identityDiv);
@@ -63,7 +59,7 @@ async function connect(username) {
 
   joinLeaveButton.innerHTML = 'Leave Video Call';
   joinLeaveButton.disabled = false;
-  login.style.display = 'none';
+  usernameInput.style.display = 'none';
 };
 
 function disconnect() {
@@ -77,19 +73,19 @@ function disconnect() {
 
   joinLeaveButton.innerHTML = 'Join Video Call';
   connected = false;
-  login.style.display = 'inline-block';
+  usernameInput.style.display = 'inline-block';
   localParticipant.removeChild(localParticipant.lastElementChild);
 };
 
 function participantConnected(participant) {
-  let participantDiv = document.createElement('div');
+  const participantDiv = document.createElement('div');
   participantDiv.setAttribute('id', participant.sid);
   participantDiv.setAttribute('class', 'participant');
 
-  let tracksDiv = document.createElement('div');
+  const tracksDiv = document.createElement('div');
   participantDiv.appendChild(tracksDiv);
 
-  let identityDiv = document.createElement('div');
+  const identityDiv = document.createElement('div');
   identityDiv.setAttribute('class', 'identity');
   identityDiv.innerHTML = participant.identity;
   participantDiv.appendChild(identityDiv);
@@ -110,7 +106,7 @@ function participantDisconnected(participant) {
 };
 
 function trackSubscribed(div, track) {
-  let trackElement = track.attach();
+  const trackElement = track.attach();
   div.appendChild(trackElement);
 };
 
@@ -121,4 +117,4 @@ function trackUnsubscribed(track) {
 };
 
 addLocalVideo();
-joinLeaveButton.addEventListener('click', connectOrDisconnect);
+login.addEventListener('submit', connectOrDisconnect);

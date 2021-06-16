@@ -1,4 +1,3 @@
-
 html, body {
   height: 100%;
   display: flex;
@@ -15,31 +14,19 @@ html, body {
   justify-content: space-evenly;
 }
 
-#login {
-  text-align: center;
-  display: inline-block;
-}
-
 input {
   font-size: 1.25em;
-}
-
-.participant {
-  box-sizing: border-box;
-  margin-right: 20px;
-  overflow: hidden;
-}
-
-.identity {
-  font-size: 22px;
+  padding: 10px 0;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #555;
+  margin-bottom: 25px;
   text-align: center;
+  width: 216px;
 }
 
-video {
-  display: block;
-  -webkit-transform: scale(-1, 1);
-  transform: scale(-1, 1);
-  width: 500px;
+input:focus {
+  border-bottom: 1px solid #aa01fe;
 }
 
 button {
@@ -59,15 +46,20 @@ button:disabled {
   opacity: 0.4;
 }
 
-input {
-  padding: 10px 0;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid #555;
-  margin-bottom: 25px;
+.participant {
+  box-sizing: border-box;
+  margin-right: 20px;
+  overflow: hidden;
+}
+
+.identity {
+  font-size: 22px;
   text-align: center;
 }
 
-input:focus {
-  border-bottom: 1px solid #aa01fe;
+video {
+  display: block;
+  -webkit-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+  width: 500px;
 }
